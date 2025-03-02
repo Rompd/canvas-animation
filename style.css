@@ -1,9 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Cabin);
 
 :root {
-  --colorBg: #121212;
-  --colorOutline: #cde800; /* Green color */
-  --colorOutlineFade: #4e5559; /* Dark gray */
+  --colorBg: #121212; 
+  --colorOutline: #cde800; /* Green outline color */
+  --colorOutlineFade: #4e5559; /* Dark gray for transitions */
   --widthMouse: 52px;
   --heightMouse: 88px;
   --borderMouse: 6px;
@@ -36,8 +36,9 @@ p {
 }
 
 .mouse {
-  background: var(--colorOutlineFade);
+  background-color: var(--colorOutlineFade);
   background-image: linear-gradient(
+    to bottom,
     transparent 0%,
     transparent 50%,
     var(--colorOutline) 50%,
@@ -47,33 +48,35 @@ p {
   width: var(--widthMouse);
   height: var(--heightMouse);
   border-radius: 100px;
-  background-size: 100% 200%; /* Ensure gradient covers the entire element */
+  background-size: 100% 200%; /* Critical for gradient animation */
   animation: colorSlide var(--animDuration) linear infinite,
     nudgeMouse var(--animDuration) ease-out infinite;
 }
 
-.mouse::before,
-.mouse::after {
+.mouse::before {
   content: "";
   position: absolute;
   top: 0;
+  left: 0;
   right: 0;
   bottom: 0;
-  left: 0;
   margin: auto;
-}
-
-.mouse::before {
   width: calc(var(--widthMouse) - var(--borderMouse));
   height: calc(var(--heightMouse) - var(--borderMouse));
-  background-color: transparent; /* Fully transparent */
+  background-color: transparent; /* Transparent center */
   border-radius: 100px;
 }
 
 .mouse::after {
-  background-color: var(--colorOutline);
+  content: "";
+  position: absolute;
+  top: var(--posTrackball);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   width: var(--sizeTrackball);
   height: var(--sizeTrackball);
+  background-color: var(--colorOutline);
   border-radius: 100%;
   animation: trackBallSlide var(--animDuration) linear infinite;
 }
@@ -107,93 +110,48 @@ p {
 }
 
 @keyframes trackBallSlide {
-  0% {
-    opacity: 1;
-    transform: scale(1) translateY(calc(-1 * var(--posTrackball)));
-  }
-  6% {
-    opacity: 1;
-    transform: scale(0.9) translateY(calc(var(--posTrackball) / 4));
-  }
-  14% {
-    opacity: 0;
-    transform: scale(var(--shrinkTrackball)) translateY(calc(var(--posTrackball) * 2));
-  }
-  15%, 19% {
-    opacity: 0;
-    transform: scale(var(--shrinkTrackball)) translateY(calc(-1 * var(--posTrackball)));
-  }
-  28%, 29.99% {
-    opacity: 1;
-    transform: scale(1) translateY(calc(-1 * var(--posTrackball)));
-  }
-  30% {
-    opacity: 1;
-    transform: scale(1) translateY(calc(-1 * var(--posTrackball)));
-  }
-  36% {
-    opacity: 1;
-    transform: scale(0.9) translateY(calc(var(--posTrackball) / 4));
-  }
-  44% {
-    opacity: 0;
-    transform: scale(var(--shrinkTrackball)) translateY(calc(var(--posTrackball) * 2));
-  }
-  45%, 49% {
-    opacity: 0;
-    transform: scale(var(--shrinkTrackball)) translateY(calc(-1 * var(--posTrackball)));
-  }
-  58%, 59.99% {
-    opacity: 1;
-    transform: scale(1) translateY(calc(-1 * var(--posTrackball)));
-  }
-  60% {
-    opacity: 1;
-    transform: scale(1) translateY(calc(-1 * var(--posTrackball)));
-  }
-  66% {
-    opacity: 1;
-    transform: scale(0.9) translateY(calc(var(--posTrackball) / 4));
-  }
-  74% {
-    opacity: 0;
-    transform: scale(var(--shrinkTrackball)) translateY(calc(var(--posTrackball) * 2));
-  }
-  75%, 79% {
-    opacity: 0;
-    transform: scale(var(--shrinkTrackball)) translateY(calc(-1 * var(--posTrackball)));
-  }
-  88%, 100% {
-    opacity: 1;
-    transform: scale(1) translateY(calc(-1 * var(--posTrackball)));
-  }
+  0% { opacity: 1; transform: scale(1) translateY(-20px); }
+  6% { opacity: 1; transform: scale(0.9) translateY(5px); }
+  14% { opacity: 0; transform: scale(0.4) translateY(40px); }
+  15%, 19% { opacity: 0; transform: scale(0.4) translateY(-20px); }
+  28%, 29.99% { opacity: 1; transform: scale(1) translateY(-20px); }
+  30% { opacity: 1; transform: scale(1) translateY(-20px); }
+  36% { opacity: 1; transform: scale(0.9) translateY(5px); }
+  44% { opacity: 0; transform: scale(0.4) translateY(40px); }
+  45%, 49% { opacity: 0; transform: scale(0.4) translateY(-20px); }
+  58%, 59.99% { opacity: 1; transform: scale(1) translateY(-20px); }
+  60% { opacity: 1; transform: scale(1) translateY(-20px); }
+  66% { opacity: 1; transform: scale(0.9) translateY(5px); }
+  74% { opacity: 0; transform: scale(0.4) translateY(40px); }
+  75%, 79% { opacity: 0; transform: scale(0.4) translateY(-20px); }
+  88%, 100% { opacity: 1; transform: scale(1) translateY(-20px); }
 }
 
 @keyframes nudgeMouse {
   0% { transform: translateY(0); }
-  20% { transform: translateY(var(--posMouse)); }
+  20% { transform: translateY(8px); }
   30% { transform: translateY(0); }
-  50% { transform: translateY(var(--posMouse)); }
+  50% { transform: translateY(8px); }
   60% { transform: translateY(0); }
-  80% { transform: translateY(var(--posMouse)); }
+  80% { transform: translateY(8px); }
   90% { transform: translateY(0); }
 }
 
 @keyframes nudgeText {
   0% { transform: translateY(0); }
-  20% { transform: translateY(var(--posText)); }
+  20% { transform: translateY(2px); }
   30% { transform: translateY(0); }
-  50% { transform: translateY(var(--posText)); }
+  50% { transform: translateY(2px); }
   60% { transform: translateY(0); }
-  80% { transform: translateY(var(--posText)); }
+  80% { transform: translateY(2px); }
   90% { transform: translateY(0); }
 }
 
 @keyframes colorText {
-  21% { color: var(--colorOutlineFade); }
-  30% { color: var(--colorOutline); }
-  51% { color: var(--colorOutlineFade); }
-  60% { color: var(--colorOutline); }
-  81% { color: var(--colorOutlineFade); }
-  90% { color: var(--colorOutline); }
+  21% { color: #4e5559; }
+  30% { color: #cde800; }
+  51% { color: #4e5559; }
+  60% { color: #cde800; }
+  81% { color: #4e5559; }
+  90% { color: #cde800; }
 }
