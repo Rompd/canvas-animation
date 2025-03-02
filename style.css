@@ -105,5 +105,11 @@ p {
   90%, 100% { background-color: var(--colorOutline); }
 }
 
-/* Include all other @keyframes from your original code similarly */
-/* (Convert $variables to var(--variables) for remaining animations) */
+@keyframes trackBallSlide {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(calc(-1 * var(--posTrackball)));
+  }
+  6% {
+    opacity: 1;
+    transform: scale(
