@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Cabin);
 
 :root {
-  --colorBg: transparent;
+  --colorBg: #121212;
   --colorOutline: #cde800;
   --colorOutlineFade: #4e5559;
   --widthMouse: 52px;
@@ -71,7 +71,7 @@ p {
 }
 
 .mouse::after {
-  background-color: transparent;
+  background-color: var(--colorOutline);
   width: var(--sizeTrackball);
   height: var(--sizeTrackball);
   border-radius: 100%;
