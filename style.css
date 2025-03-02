@@ -112,4 +112,87 @@ p {
   }
   6% {
     opacity: 1;
-    transform: scale(
+    transform: scale(0.9) translateY(calc(var(--posTrackball) / 4));
+  }
+  14% {
+    opacity: 0;
+    transform: scale(var(--shrinkTrackball)) translateY(calc(var(--posTrackball) * 2));
+  }
+  15%, 19% {
+    opacity: 0;
+    transform: scale(var(--shrinkTrackball)) translateY(calc(-1 * var(--posTrackball)));
+  }
+  28%, 29.99% {
+    opacity: 1;
+    transform: scale(1) translateY(calc(-1 * var(--posTrackball)));
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1) translateY(calc(-1 * var(--posTrackball)));
+  }
+  36% {
+    opacity: 1;
+    transform: scale(0.9) translateY(calc(var(--posTrackball) / 4));
+  }
+  44% {
+    opacity: 0;
+    transform: scale(var(--shrinkTrackball)) translateY(calc(var(--posTrackball) * 2));
+  }
+  45%, 49% {
+    opacity: 0;
+    transform: scale(var(--shrinkTrackball)) translateY(calc(-1 * var(--posTrackball)));
+  }
+  58%, 59.99% {
+    opacity: 1;
+    transform: scale(1) translateY(calc(-1 * var(--posTrackball)));
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1) translateY(calc(-1 * var(--posTrackball)));
+  }
+  66% {
+    opacity: 1;
+    transform: scale(0.9) translateY(calc(var(--posTrackball) / 4));
+  }
+  74% {
+    opacity: 0;
+    transform: scale(var(--shrinkTrackball)) translateY(calc(var(--posTrackball) * 2));
+  }
+  75%, 79% {
+    opacity: 0;
+    transform: scale(var(--shrinkTrackball)) translateY(calc(-1 * var(--posTrackball)));
+  }
+  88%, 100% {
+    opacity: 1;
+    transform: scale(1) translateY(calc(-1 * var(--posTrackball)));
+  }
+}
+
+@keyframes nudgeMouse {
+  0% { transform: translateY(0); }
+  20% { transform: translateY(var(--posMouse)); }
+  30% { transform: translateY(0); }
+  50% { transform: translateY(var(--posMouse)); }
+  60% { transform: translateY(0); }
+  80% { transform: translateY(var(--posMouse)); }
+  90% { transform: translateY(0); }
+}
+
+@keyframes nudgeText {
+  0% { transform: translateY(0); }
+  20% { transform: translateY(var(--posText)); }
+  30% { transform: translateY(0); }
+  50% { transform: translateY(var(--posText)); }
+  60% { transform: translateY(0); }
+  80% { transform: translateY(var(--posText)); }
+  90% { transform: translateY(0); }
+}
+
+@keyframes colorText {
+  21% { color: var(--colorOutlineFade); }
+  30% { color: var(--colorOutline); }
+  51% { color: var(--colorOutlineFade); }
+  60% { color: var(--colorOutline); }
+  81% { color: var(--colorOutlineFade); }
+  90% { color: var(--colorOutline); }
+}
