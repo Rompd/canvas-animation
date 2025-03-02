@@ -1,100 +1,263 @@
-class Particle {
-  constructor({ x, y, radius = 1, color }) {
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
-    this.color = color;
-    this.velocity = {
-      x: (Math.random() - 0.5) * 0.5,
-      y: (Math.random() - 0.5) * 0.5
-    };
-  }
+@import url(https://fonts.googleapis.com/css?family=Cabin);
 
-  draw(ctx) {
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fillStyle = this.color;
-    ctx.fill();
-    ctx.restore();
-  }
+$colorBg: #121212;
+$colorOutline: #cde800;
+$colorOutlineFade: #4e5559;
 
-  update(ctx) {
-    this.draw(ctx);
-    this.x += this.velocity.x;
-    this.y += this.velocity.y;
+$widthMouse: 52px;
+$heightMouse: 88px;
+$borderMouse: 6px;
+
+$posMouse: 8px;
+$posText: 2px;
+
+$sizeTrackball: 10px;
+$posTrackball: 20px;
+$shrinkTrackball: 0.4;
+
+$animDuration: 5s;
+
+@mixin bgGradient {
+  background: $colorOutlineFade
+    linear-gradient(
+      transparent 0%,
+      transparent 50%,
+      $colorOutline 50%,
+      $colorOutline 100%
+    );
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: $colorBg;
+}
+
+p {
+  margin-top: 50px;
+  font-family: "Cabin", sans-serif;
+  letter-spacing: 12px;
+  text-indent: 12px;
+  color: $colorOutline;
+  animation: colorText $animDuration ease-out infinite,
+    nudgeText $animDuration ease-out infinite;
+}
+
+.mouse {
+  @include bgGradient;
+  position: relative;
+  width: $widthMouse;
+  height: $heightMouse;
+  border-radius: 100px;
+  background-size: 100% 200%;
+  animation: colorSlide $animDuration linear infinite,
+    nudgeMouse $animDuration ease-out infinite;
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+  }
+  &:before {
+    width: $widthMouse - $borderMouse;
+    height: $heightMouse - $borderMouse;
+    background-color: $colorBg;
+    border-radius: 100px;
+  }
+  &:after {
+    background-color: $colorOutline;
+    width: $sizeTrackball;
+    height: $sizeTrackball;
+    border-radius: 100%;
+    animation: trackBallSlide $animDuration linear infinite;
   }
 }
 
-class Canvas {
-  constructor() {
-    this.canvas = document.querySelector(".space");
-    this.ctx = this.canvas.getContext("2d");
-    this.mouse = { x: 0, y: 0 };
-    this.particles = [];
-    this.init();
+@keyframes colorSlide {
+  0% {
+    background-position: 0% 100%;
   }
-
-  init() {
-    this.setCanvasSize();
-    this.createParticles();
-    this.addEventListeners();
-    this.animate();
+  20% {
+    background-position: 0% 0%;
   }
-
-  setCanvasSize() {
-    this.canvas.width = 600;
-    this.canvas.height = 400;
+  21% {
+    background-color: $colorOutlineFade;
   }
-
-  createParticles() {
-    const colors = ["#FF5F5F", "#88D8FF", "#F8D86A"];
-    const count = 150;
-    
-    for(let i = 0; i < count; i++) {
-      this.particles.push(new Particle({
-        x: Math.random() * this.canvas.width,
-        y: Math.random() * this.canvas.height,
-        color: colors[Math.floor(Math.random() * colors.length)]
-      }));
-    }
+  29.99% {
+    background-color: $colorOutline;
+    background-position: 0% 0%;
   }
-
-  addEventListeners() {
-    window.addEventListener("mousemove", (e) => {
-      this.mouse.x = e.clientX;
-      this.mouse.y = e.clientY;
-    });
-    
-    window.addEventListener("resize", () => {
-      this.setCanvasSize();
-    });
+  30% {
+    background-color: $colorOutlineFade;
+    background-position: 0% 100%;
   }
-
-  animate() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    
-    this.particles.forEach(particle => {
-      particle.update(this.ctx);
-      
-      // Mouse interaction
-      const distance = Math.hypot(
-        particle.x - this.mouse.x,
-        particle.y - this.mouse.y
-      );
-      
-      if(distance < 100) {
-        particle.velocity.x += (particle.x - this.mouse.x) * 0.001;
-        particle.velocity.y += (particle.y - this.mouse.y) * 0.001;
-      }
-      
-      // Bounce off walls
-      if(particle.x <= 0 || particle.x >= this.canvas.width) particle.velocity.x *= -1;
-      if(particle.y <= 0 || particle.y >= this.canvas.height) particle.velocity.y *= -1;
-    });
-    
-    requestAnimationFrame(() => this.animate());
+  50% {
+    background-position: 0% 0%;
+  }
+  51% {
+    background-color: $colorOutlineFade;
+  }
+  59% {
+    background-color: $colorOutline;
+    background-position: 0% 0%;
+  }
+  60% {
+    background-color: $colorOutlineFade;
+    background-position: 0% 100%;
+  }
+  80% {
+    background-position: 0% 0%;
+  }
+  81% {
+    background-color: $colorOutlineFade;
+  }
+  90%,
+  100% {
+    background-color: $colorOutline;
   }
 }
 
-new Canvas();
+@keyframes trackBallSlide {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(-$posTrackball);
+  }
+  6% {
+    opacity: 1;
+    transform: scale(0.9) translateY($posTrackball/4);
+  }
+  14% {
+    opacity: 0;
+    transform: scale($shrinkTrackball) translateY($posTrackball * 2);
+  }
+  15%,
+  19% {
+    opacity: 0;
+    transform: scale($shrinkTrackball) translateY(-$posTrackball);
+  }
+  28%,
+  29.99% {
+    opacity: 1;
+    transform: scale(1) translateY(-$posTrackball);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1) translateY(-$posTrackball);
+  }
+  36% {
+    opacity: 1;
+    transform: scale(0.9) translateY($posTrackball/4);
+  }
+  44% {
+    opacity: 0;
+    transform: scale($shrinkTrackball) translateY($posTrackball * 2);
+  }
+  45%,
+  49% {
+    opacity: 0;
+    transform: scale($shrinkTrackball) translateY(-$posTrackball);
+  }
+  58%,
+  59.99% {
+    opacity: 1;
+    transform: scale(1) translateY(-$posTrackball);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1) translateY(-$posTrackball);
+  }
+  66% {
+    opacity: 1;
+    transform: scale(0.9) translateY($posTrackball/4);
+  }
+  74% {
+    opacity: 0;
+    transform: scale($shrinkTrackball) translateY($posTrackball * 2);
+  }
+  75%,
+  79% {
+    opacity: 0;
+    transform: scale($shrinkTrackball) translateY(-$posTrackball);
+  }
+  88%,
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(-$posTrackball);
+  }
+}
+
+@keyframes nudgeMouse {
+  0% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY($posMouse);
+  }
+  30% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY($posMouse);
+  }
+  60% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateY($posMouse);
+  }
+  90% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes nudgeText {
+  0% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY($posText);
+  }
+  30% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY($posText);
+  }
+  60% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateY($posText);
+  }
+  90% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes colorText {
+  21% {
+    color: $colorOutlineFade;
+  }
+  30% {
+    color: $colorOutline;
+  }
+  51% {
+    color: $colorOutlineFade;
+  }
+  60% {
+    color: $colorOutline;
+  }
+  81% {
+    color: $colorOutlineFade;
+  }
+  90% {
+    color: $colorOutline;
+  }
+}
