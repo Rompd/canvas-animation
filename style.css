@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Cabin);
 
 :root {
-  --colorBg: #121212;
+  --colorBg: #transparent;
   --colorOutline: #cde800;
   --colorOutlineFade: #4e5559;
   --widthMouse: 52px;
