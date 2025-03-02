@@ -21,7 +21,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: var(--colorBg);
+  background-color: transparent;
   margin: 0;
 }
 
@@ -66,12 +66,12 @@ p {
 .mouse::before {
   width: calc(var(--widthMouse) - var(--borderMouse));
   height: calc(var(--heightMouse) - var(--borderMouse));
-  background-color: var(--colorBg);
+  background-color: transparent;
   border-radius: 100px;
 }
 
 .mouse::after {
-  background-color: var(--colorOutline);
+  background-color: transparent;
   width: var(--sizeTrackball);
   height: var(--sizeTrackball);
   border-radius: 100%;
