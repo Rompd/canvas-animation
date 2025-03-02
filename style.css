@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Cabin);
 
 :root {
-  --colorBg: #121212;
+  --colorBg: transparent;
   --colorOutline: #cde800;
   --colorOutlineFade: #4e5559;
   --widthMouse: 52px;
@@ -36,7 +36,7 @@ p {
 }
 
 .mouse {
-  background: var(--colorOutlineFade);
+  background: transparent;
   background-image: linear-gradient(
     transparent 0%,
     transparent 50%,
@@ -71,7 +71,7 @@ p {
 }
 
 .mouse::after {
-  background-color: var(--colorOutline);
+  background-color: transparent;
   width: var(--sizeTrackball);
   height: var(--sizeTrackball);
   border-radius: 100%;
